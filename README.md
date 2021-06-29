@@ -12,3 +12,13 @@ The Command Interpreter is used to manage the whole application's functionality 
 - Execute operation on objects. e.g. Count, compute statistics, etc.
 - Update object's attributes.
 - Destroy an object.
+
+#### Usage
+
+To launch the console application in interactive mode simply run:
+
+`console.py `
+
+or to use the non-interactive mode run:
+
+`echo "your-command-goes-here" | ./console.py `
