@@ -37,5 +37,5 @@ class FileStorage:
                     my_class = eval(dictionary["__class__"])
                     new_instance = my_class(**dictionary)
                     self.new(new_instance)
-        except:
+        except FileNotFoundError:
             pass
