@@ -18,6 +18,17 @@ class TestFileStorage(unittest.TestCase):
         super().setUp()
         self.file_path = 'file.json'
 
+    def test_pep8_base_model(self):
+        """pep8 test.
+        Makes sure the Python code is up to the pep8 standard.
+        """
+        syntax = pep8.StyleGuide(quit=True)
+        check = syntax.check_files(['models/base_model.py'])
+        self.assertEqual(
+            check.total_errors, 0,
+            "Found code style errors (and warnings)."
+        )
+
     def test_instance_creation(self):
         """ Test for FfileStorage instance creation """
         my_storage = FileStorage()
