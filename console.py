@@ -111,7 +111,16 @@ class HBNBCommand(cmd.Cmd):
         else:
             if key_for_search in all_objects:
                 my_object = all_objects[key_for_search]
-                setattr(my_object, tokens[2], tokens[3])
+
+                tokens2 = tokens[2].replace('"', '')
+                tokens3 = eval(tokens[3])
+
+                if hasattr(my_object, tokens2):
+                    new_type = type(getattr(my_object, tokens2))
+                    tokens3 = new_type(tokens3)
+
+                setattr(my_object, tokens2, tokens3)
+
                 storage.save()
             else:
                 print("** no instance found **")
