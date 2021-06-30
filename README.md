@@ -35,3 +35,11 @@ or to use the non-interactive mode run:
 | **destroy**       | Deletes and instance base on the class name and id.                                                                                    | **destroy** \<class_name class_id\>          |
 | **all**           | Prints all string representation of all instances based or not on the class name                                                       | **all** or **all** \<class_name class_id\>   |
 | **update**        | Updates an instance based on the class name and id by adding or updating attribute                                                     | **update** \<class_name class_id key value\> |
+
+## Tests
+
+Under the **test/** folder and can execute all of them by simply running:
+
+`python3 -m unittest discover tests `
+
+from the root directory.
