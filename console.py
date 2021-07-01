@@ -15,7 +15,8 @@ from models.amenity import Amenity
 class HBNBCommand(cmd.Cmd):
     """The command interpreter class"""
     prompt = ('(hbnb) ')
-    my_classes = ["BaseModel", "User", "Place", "Review"]
+    my_classes = ["BaseModel", "User", "Place",
+                  "Review", "State", "City", "Amenity"]
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
