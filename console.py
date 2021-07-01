@@ -158,6 +158,7 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(tokens[0])
             elif tokens[1] == 'count()':
                 self.do_count(tokens[0])
+            # elif tokens[1] == 'show()'
             else:
                 messg = "** Unknown syntax: " + arg
                 print(messg)
