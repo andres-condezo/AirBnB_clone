@@ -132,6 +132,18 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
+    def do_count(self, arg):
+        """Rieve the number of instances of a class"""
+        all_list = []
+        all_objects = storage.all()
+
+        if arg in self.my_classes:
+            class_for_search = arg
+            for key, value in all_objects.items():
+                if class_for_search in key:
+                    all_list.append(str(value))
+        print(len(all_list))
+
     def default(self, arg):
         """Method called on an input line when the command prefix
         is not recognized"""
@@ -144,6 +156,8 @@ class HBNBCommand(cmd.Cmd):
             if tokens[1] == 'all()':
                 print("Fun encontrada")
                 self.do_all(tokens[0])
+            elif tokens[1] == 'count()':
+                self.do_count(tokens[0])
             else:
                 messg = "** Unknown syntax: " + arg
                 print(messg)
