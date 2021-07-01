@@ -132,6 +132,43 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
 
+    def default(self, arg):
+        """Method called on an input line when the command prefix
+        is not recognized"""
+        # my_functions = {"all()": "do_all", "show": "do_show"}
+
+        if '.' in arg:
+            tokens = arg.split(".")
+
+            # if tokens[1] in my_functions:
+            if tokens[1] == 'all()':
+                print("Fun encontrada")
+                self.do_all(tokens[0])
+            else:
+                messg = "** Unknown syntax: " + arg
+                print(messg)
+
+                # print("funcion encontrada")
+                # print(tokens[1])
+                # my_fun = my_functions[tokens[1]]
+                # print("imp type fun")
+                # print(type(my_fun))
+                # print(my_fun)
+                # print("saliendo")
+                # fun_mod = eval('my_fun')()
+                # print("imp type fun mod")
+                # print(type(fun_mod))
+                # print(fun_mod)
+                # print("saliendo")
+            # else:
+            #     print("funcion no encontrada")
+            #     print(tokens[1])
+
+        else:
+            # print("no tiene puntos")
+            messg = "** Unknown syntax: " + arg
+            print(messg)
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
