@@ -102,7 +102,6 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """Updates an instance based on the class name and id"""
         tokens = arg.split()
-        key_for_search = "{}.{}".format(tokens[0], tokens[1])
         all_objects = storage.all()
 
         if len(tokens) == 0:
@@ -116,6 +115,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(tokens) == 3:
             print("** value missing **")
         else:
+            key_for_search = "{}.{}".format(tokens[0], tokens[1])
             if key_for_search in all_objects:
                 my_object = all_objects[key_for_search]
 
