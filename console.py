@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_count(self, arg):
-        """Rieve the number of instances of a class"""
+        """Retriieve the number of instances of a class"""
         all_list = []
         all_objects = storage.all()
 
@@ -162,22 +162,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 messg = "** Unknown syntax: " + arg
                 print(messg)
-
-                # print("funcion encontrada")
-                # print(tokens[1])
-                # my_fun = my_functions[tokens[1]]
-                # print("imp type fun")
-                # print(type(my_fun))
-                # print(my_fun)
-                # print("saliendo")
-                # fun_mod = eval('my_fun')()
-                # print("imp type fun mod")
-                # print(type(fun_mod))
-                # print(fun_mod)
-                # print("saliendo")
-            # else:
-            #     print("funcion no encontrada")
-            #     print(tokens[1])
 
         else:
             # print("no tiene puntos")
