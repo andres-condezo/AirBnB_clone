@@ -4,6 +4,9 @@
   width: 100%;
   border: 1px solid #dddddd;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 button {
@@ -12,6 +15,10 @@ button {
   color: #ffffff;
   height: 48px;
   width: 20%;
-  border: 0;
-  color: red;
+  border: none;
+  border-radius: 4px;
+  margin-right: 30px;
+}
+button:hover {
+  opacity: 0.9;
 }
