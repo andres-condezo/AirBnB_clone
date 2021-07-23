@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module contains the entry point of the command interpreter"""
 import cmd
+import re
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 from models import storage
@@ -144,29 +145,94 @@ class HBNBCommand(cmd.Cmd):
                     all_list.append(str(value))
         print(len(all_list))
 
-    def default(self, arg):
+
+
+    def __update_from_dict(self, dct):
+        """Updates an instance based on the class name and id
+        by adding or updating an attribute"""
+
+        if not dct.get('class', False):
+            print('** class name missing **')
+        # elif dct['class'] not in HBNBCommand.__valid_classes:
+        elif dct['class'] not in HBNBCommand.my_classes:
+            print('** class doesn\'t exist **')
+        elif not dct.get('id', False):
+            print('** instance id missing **')
+        else:
+            key = "{}.{}".format(dct['class'], dct['id'])
+            if key not in storage.all():
+                print('** no instance found **')
+            else:
+                forbiden_update = ['id', 'created_at', 'updated_at', 'class']
+                for attr, value in dct.items():
+                    if attr not in forbiden_update:
+                        obj = storage.all()[key]
+                        if attr in obj.__dict__:
+                            value = type(obj.__dict__[attr])(value)
+                        obj.__setattr__(attr, value)
+                        storage.save()
+
+    def default(self, line):
         """Method called on an input line when the command prefix
         is not recognized"""
-        # my_functions = {"all()": "do_all", "show": "do_show"}
 
-        if '.' in arg:
-            tokens = arg.split(".")
+        actions = {
+            r'^all\(.*\)$': self.do_all,
+            r'^count\(.*\)$': self.do_count,
+            r'^show\(.*\)$': self.do_show,
+            r'^destroy\(.*\)$': self.do_destroy,
+            r'^update\(.*\)$': self.do_update
+        }
 
-            # if tokens[1] in my_functions:
-            if tokens[1] == 'all()':
-                print("Fun encontrada")
-                self.do_all(tokens[0])
-            elif tokens[1] == 'count()':
-                self.do_count(tokens[0])
-            # elif tokens[1] == 'show()'
-            else:
-                messg = "** Unknown syntax: " + arg
-                print(messg)
+        args = line.split('.')
+        if len(args) == 2:
+            for action in actions.keys():
+                match = re.search(pattern=action, string=args[1])
+                if match:
+                    text_args = match.group()
 
-        else:
-            # print("no tiene puntos")
-            messg = "** Unknown syntax: " + arg
-            print(messg)
+                    # r'^update\(.*, \{.*\}\)$': self.__update_from_dict
+                    pattern = r'\(.*, \{.*\}\)$'
+                    match = re.search(pattern=pattern, string=text_args)
+                    if match:
+                        txt_args = str(match.group())
+                        params = eval("[" + txt_args[1:-1] + "]")
+                        dct = params[-1]
+                        dct['id'] = params[0]
+                        dct['class'] = args[0]
+                        return self.__update_from_dict(dct)
+                    else:
+                        pattern = r'\(.*\)$'
+                        match = re.search(pattern=pattern, string=text_args)
+                        if match:
+                            txt_args = str(match.group())
+                            txt_args = txt_args[1:-1].replace(',', ' ')
+                            txt_args = "{} {}".format(args[0], txt_args)
+                            return actions[action](txt_args)
+
+        return super().default(line)
+
+
+
+
+        # if '.' in arg:
+        #     tokens = arg.split(".")
+
+        #     # if tokens[1] in my_functions:
+        #     if tokens[1] == 'all()':
+        #         print("Fun encontrada")
+        #         self.do_all(tokens[0])
+        #     elif tokens[1] == 'count()':
+        #         self.do_count(tokens[0])
+        #     # elif tokens[1] == 'show()'
+        #     else:
+        #         messg = "** Unknown syntax: " + arg
+        #         print(messg)
+
+        # else:
+        #     # print("no tiene puntos")
+        #     messg = "** Unknown syntax: " + arg
+        #     print(messg)
 
 
 if __name__ == '__main__':
